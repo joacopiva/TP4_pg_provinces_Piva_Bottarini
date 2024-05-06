@@ -4,7 +4,7 @@ import ProvinceService from '../service/province-service.js';
 const router = Router();
 const svc = new ProvinceService();
 
-router.get('', async (req, res) => {
+router.get('/', async (req, res) => {
     let respuesta;
     const returnArray = await svc.getAllAsync();
     if(returnArray != null)
@@ -41,3 +41,5 @@ router.delete('/:id', async (req, res) =>
 
 
 })
+
+export default router;

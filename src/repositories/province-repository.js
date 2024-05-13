@@ -45,8 +45,15 @@ export default class ProvinceRepository {
             VALUES
                 ($1, $2, $3, $4, $5)
         `;
-        const values =
-            ['Chaco Provincia', 'Provincia de Chaco', -24.895086288452148, -59.93218994140625, 100];
+        const values =    
+        [
+            entity.name,
+            entity.full_name,
+            entity.latitude,
+            entity.longitude,
+            entity.display_order
+        ]
+
         const result = await client.query(sql, values);
         await client.end();
         return result
@@ -54,13 +61,34 @@ export default class ProvinceRepository {
 
     updateAsync = async (entity) => 
     {
-
+        const client = new Client(DBConfig);
+        await client.connect();
+        const sql = 
+        `UPDATE provinces 
+        SET name = $1, full_name = $2, latitude = $3, longitude = $4, display_order = $5 
+        WHERE id = ${entity.id}`;
+        const values = 
+        [
+            entity.name,
+            entity.full_name,
+            entity.latitude,
+            entity.longitude,
+            entity.display_order
+        ]
+        const result = await client.query(sql, values);
+        await client.end();
+        return result;
     }
+    
 
     deleteByIdAsync = async (id) => 
     {
-
+        const client = new Client(DBConfig);
+        await client.connect();
+        const sql = 
+        `DELETE FROM provinces WHERE id = ${id}`;
+        const result = await client.query(sql);
+        await client.end();
+        return result;
     }
-
-
 }

@@ -20,14 +20,41 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => 
 {
+    let id = req.params.id;
+    
+    let respuesta;
+    const returnArray = await svc.getByIdAsync(id);
+
+    if(returnArray != null)
+    {
+        respuesta = res.status(201).json(returnArray);
+    }
+    else
+    {
+        respuesta = res.status(500).send(`Error interno.`)
+    }
+
+    res.status(200).json(respuesta);
 
 
-})
+    return respuesta;
+});
 
 router.post('', async (req, res) => 
 {
+    let respuesta
+    let entity = req.body
+    const returnArray = await svc.createAsync(entity);
+    if(returnArray != null)
+    {
+        respuesta = res.status(201).json(returnArray);
+    }
+    else
+    {
+        respuesta = res.status(500).send(`Error interno.`)
+    }
 
-
+    return respuesta
 })
 
 router.put('', async (req, res) => 

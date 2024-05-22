@@ -34,8 +34,6 @@ router.get('/:id', async (req, res) =>
         respuesta = res.status(500).send(`Error interno.`)
     }
 
-    res.status(200).json(respuesta);
-
 
     return respuesta;
 });

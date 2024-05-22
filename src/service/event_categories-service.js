@@ -1,4 +1,4 @@
-import Event_CategoriesRepository from "../repositories/event_categories-repository";
+import Event_CategoriesRepository from "../repositories/event_categories-repository.js";
 
 
 
@@ -16,5 +16,19 @@ export default class Event_CategoriesService
         const returnArray = await repo.getByIdAsync(id);
         return returnArray;
 
+    }
+
+    createAsync = async (entity) => 
+    {
+        const repo = new Event_CategoriesRepository();
+        const returnArray = await repo.createAsync(entity);
+        return returnArray;
+    }
+
+    updateAsync = async (entity) => 
+    {
+        const repo = new Event_CategoriesRepository();
+        const returnArray = await repo.updateAsync(entity);
+        return returnArray;
     }
 }

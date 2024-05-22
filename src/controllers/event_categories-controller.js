@@ -24,9 +24,55 @@ router.get('/:id', async (req, res) =>
     
     let respuesta;
     const returnArray = await svc.getByIdAsync(id);
-
+    
     if(returnArray != null)
     {
+        respuesta = res.status(201).json(returnArray);
+
+    }
+    else
+    {
+        respuesta = res.status(500).send(`Error interno.`)
+    }
+
+    
+
+    return respuesta;
+});
+
+router.post('', async (req, res) => 
+{
+    let respuesta
+    let entity = req.body;
+
+
+    if(entity != null && (entity.name).length > 3 && (entity.name).length != 0)
+    {
+        const returnArray = await svc.createAsync(entity);
+        respuesta = res.status(201).json(returnArray);
+
+    }
+    else
+    {
+        respuesta = res.status(500).send(`Error interno.`)
+    }
+
+    return respuesta
+})
+
+router.put('', async (req, res) => 
+{
+
+    let respuesta;
+    let entity = req.body;
+
+
+    if(entity != null && (entity.name).length > 3 && (entity.name).length != 0)
+    {
+        const returnArray = await svc.updateAsync(entity);
+        const getAll = await svc.getAllAsync();
+        console.log(getAll)
+        
         respuesta = res.status(201).json(returnArray);
     }
     else
@@ -34,11 +80,8 @@ router.get('/:id', async (req, res) =>
         respuesta = res.status(500).send(`Error interno.`)
     }
 
-    res.status(200).json(respuesta);
-
-
-    return respuesta;
-});
+    return respuesta
+})
 
 
 export default router;

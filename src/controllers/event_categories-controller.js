@@ -71,9 +71,27 @@ router.put('', async (req, res) =>
     {
         const returnArray = await svc.updateAsync(entity);
         const getAll = await svc.getAllAsync();
-        console.log(getAll)
+        let encontrado = false;
+
+
+        getAll.forEach(element => {
+            if(element.id == entity.id)
+            {
+                encontrado = true;
+            }
+        });
+
         
-        respuesta = res.status(201).json(returnArray);
+        console.log(getAll)
+        if(encontrado)
+        {
+            respuesta = res.status(201).json(returnArray);
+        }
+        else
+        {
+            respuesta = res.status(404).send(`not found`)
+        }
+
     }
     else
     {
@@ -81,6 +99,39 @@ router.put('', async (req, res) =>
     }
 
     return respuesta
+})
+
+router.delete('/:id', async (req, res) => 
+{
+    let id = req.params.id;
+    let respuesta;
+
+    const getAll = await svc.getAllAsync();
+
+
+    let encontrado = false;
+
+        getAll.forEach(element => {
+            if(element.id == id)
+            {
+                encontrado = true;
+            }
+        });
+
+        
+        if(encontrado)
+        {
+            const returnArray = await svc.deleteByIdAsync(id);
+            respuesta = res.status(200).json(returnArray);
+        }
+        else
+        {
+            respuesta = res.status(404).send(`not found`)
+        }
+    
+
+    return respuesta;
+
 })
 
 

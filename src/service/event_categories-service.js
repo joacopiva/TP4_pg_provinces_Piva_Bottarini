@@ -31,4 +31,11 @@ export default class Event_CategoriesService
         const returnArray = await repo.updateAsync(entity);
         return returnArray;
     }
+    
+    deleteByIdAsync = async (id) => 
+    {
+        const repo = new Event_CategoriesRepository();
+        const returnArray = await repo.deleteByIdAsync(id);
+        return returnArray;
+    }
 }

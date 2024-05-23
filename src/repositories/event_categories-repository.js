@@ -78,4 +78,15 @@ export default class Event_CategoriesRepository
         await client.end();
         return result;
     }
+
+    deleteByIdAsync = async (id) => 
+    {
+        const client = new Client(DBConfig);
+        await client.connect();
+        const sql = 
+        `DELETE FROM event_categories WHERE id = ${id}`;
+        const result = await client.query(sql);
+        await client.end();
+        return result;
+    }
 }

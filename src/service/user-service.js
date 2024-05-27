@@ -10,4 +10,12 @@ export default class UserService
         const returnArray = await repo.createAsync(entity);
         return returnArray;
     }
+
+    getByIdAsync = async (username) => 
+    {
+        const repo = new UserRepository();
+        const returnArray = await repo.getByIdAsync(username);
+        return returnArray;
+
+    }
 }

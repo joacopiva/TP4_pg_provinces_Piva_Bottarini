@@ -31,4 +31,24 @@ export default class UserRepository
             return result
         
     }
+
+    getByIdAsync = async (username) => 
+    {
+        console.log(username)
+        let returnArray = null;
+        const client = new Client(DBConfig);
+        try{
+            await client.connect();
+            const sql = `SELECT * FROM users WHERE username = '${username}'`;
+            const result = await client.query(sql);
+            await client.end();
+            returnArray = result.rows;
+            console.log(returnArray)
+        } catch (error) {
+            console.log(error);
+        }
+        return returnArray;
+    }
+
+
 }

@@ -8,7 +8,7 @@ const help = new helpers;
 
 
 
-router.post('', async (req, res) => 
+router.post('/register', async (req, res) => 
 {
     let respuesta
     let entity = req.body;
@@ -31,6 +31,16 @@ router.post('', async (req, res) =>
     }
 
     return respuesta
+})
+
+router.post('/login', async(req, res)=>
+{
+    let respuesta
+
+    const returnArray = await svc.getByIdAsync(req.body.username);
+    
+    respuesta = res.status(201).json(returnArray);
+
 })
 
 

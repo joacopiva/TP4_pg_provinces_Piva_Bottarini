@@ -20,6 +20,7 @@ app.use("/api/event_categories",Event_CategoriesRouter);
 
 app.use("/api/user",UserRouter); 
 
+
 app.listen(port,()=>
 {
     console.log(`Exampleapplisteningonport${port}`) 

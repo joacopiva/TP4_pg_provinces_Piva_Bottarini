@@ -37,9 +37,14 @@ router.post('/login', async(req, res)=>
 {
     let respuesta
 
-    const returnArray = await svc.getByIdAsync(req.body.username);
+    const returnArray = await svc.getByUsernamePassword(req.body.username, req.body.password);
     
-    respuesta = res.status(201).json(returnArray);
+    if(returnArray.username == req.username)
+    {
+        const GetAll = await svc.LogIn(req.body.username, req.body.password)
+    }
+
+    respuesta = res.status(201).json();
 
 })
 

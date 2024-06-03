@@ -1,4 +1,5 @@
 import UserRepository from "../repositories/user-repository.js";
+import jwt from 'jsonwebtoken';
 
 
 const key = 'Clavesecreta2000$';
@@ -19,6 +20,7 @@ export default class UserService
 
     getByUsernamePassword = async (username, password) => 
     {
+
         const repo = new UserRepository();
         const returnArray = await repo.getByUsernamePassword(username, password);
         return returnArray;
@@ -27,13 +29,17 @@ export default class UserService
 
     LogIn = async (username, password) =>
     {
-        const returnArray = await jwt.verify(username, password);
+        const repo = new UserRepository();
+        const returnArray = await repo.getByUsernamePassword(username, password);
         const payload = 
         {
             id: returnArray.id,
             username: returnArray.username
         }
-        const token = jwt.sign(payload, key, options);
+        let token = jwt.sign(payload, key, options);
+        console.log(token)
+
+        token = jwt.verify(token, key)
         return {token};
     }
 }

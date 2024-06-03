@@ -37,13 +37,24 @@ router.post('/login', async(req, res)=>
 {
     let respuesta
 
+
     const returnArray = await svc.getByUsernamePassword(req.body.username, req.body.password);
-    
+
+
     if(returnArray.username == req.username)
     {
         const GetAll = await svc.LogIn(req.body.username, req.body.password)
-        token = GetAll.token;
-        res.status(200).json({success: true, token: result.token})
+        let token = GetAll.token;
+        console.log(token)
+        if(token == req.body.password)
+        {
+            res.status(200).json({success: true, token: result.token})
+        }
+        else
+        {
+            res.status(401).json({success: false, message: 'usuario o contraseña invalido'});
+
+        }
     }
     else
     {

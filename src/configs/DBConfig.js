@@ -1,14 +1,10 @@
 const config = 
 {
-    user: "username",
+    host: "localhost",
+    database: "dai-events",
+    user: "postgres",
     password: "root",
-    server: "localhost",
-    database: "LucilApp_DataBase",
-    options:
-    {
-        trustServerCertificate: true,
-        trustedConnection: true
-    }
+    port: "5432"
 }
 
 export default config;

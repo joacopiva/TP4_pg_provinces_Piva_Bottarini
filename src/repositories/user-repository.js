@@ -1,4 +1,3 @@
-import { password } from 'pg/lib/defaults.js';
 import DBConfig from '../configs/DBConfig.js';
 import pkg from 'pg'
 const { Client } = pkg;
@@ -48,6 +47,7 @@ export default class UserRepository
         }
         return returnArray;
     }
+    
     LogIn = async (username, password) =>
     {
         

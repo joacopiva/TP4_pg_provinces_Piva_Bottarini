@@ -33,13 +33,14 @@ export default class UserService
         const returnArray = await repo.getByUsernamePassword(username, password);
         const payload = 
         {
-            id: returnArray.id,
-            username: returnArray.username
+            id: returnArray[0].id,
+            username: returnArray[0].username
         }
-        let token = jwt.sign(payload, key, options);
-        console.log(token)
 
-        token = jwt.verify(token, key)
+        let token = jwt.sign(payload, key, options);
+
+        //let token2 = jwt.verify(token, key, options) EJEMPLO DE DESENCRIPTACION
+        
         return {token};
     }
 }

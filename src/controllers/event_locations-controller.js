@@ -1,20 +1,23 @@
 import {Router} from 'express';
 import Event_LocationsService from '../service/event_locations-service.js';
 import helpers from '../helpers/helpers.js';
+import Autentication from '../middlewares/autentication-middlewares.js';
 
 const router = Router();
-const help = new helpers;
+const mw = new Autentication();
+const help = new helpers();
 const svc = new Event_LocationsService();
 
-router.get('/', async (req, res) => {
+router.get('/', mw.desencriptacion, async (req, res) => {
+
+
     let respuesta;
     const entity = req.body
 
-    const token = req.query.keytoken
-    console.log(token)
 
-    if(entity != null && help.UserAutentication(token) == true)
+    if(entity != null)
     {
+
         const returnArray = await svc.getAllAsync();
         respuesta = res.status(200).json(returnArray);
     } 

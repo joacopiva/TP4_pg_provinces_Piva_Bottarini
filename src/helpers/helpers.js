@@ -1,11 +1,3 @@
-const key = 'Clavesecreta2000$';
-const options =
-{
-    expiresIn:  '1h',
-    issuer: 'mi_organizacion'
-}
-
-
 class helpers
 {
     validarVaciosYMenorTresLetras = (variable) =>
@@ -30,17 +22,6 @@ class helpers
             valido2 = true;
         }
         return valido2
-    }
-
-    UserAutentication = (token, key, options) => 
-    {
-        let validado = false;
-        let tokenDesencripado = jwt.verify(token, key, options)
-        console.log(tokenDesencripado)
-
-    
-
-        return validado
     }
 }
 

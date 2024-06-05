@@ -4,6 +4,8 @@ import ProvinceRouter from "./src/controllers/province-controller.js";
 import LocationRouter from "./src/controllers/location-controller.js";
 import Event_CategoriesRouter from "./src/controllers/event_categories-controller.js";
 import UserRouter from "./src/controllers/user-controller.js";
+import Event_LocationsRouter from "./src/controllers/event_locations-controller.js";
+
 
 const app = express(); 
 const port = 3000; //Elpuerto3000(http://localhost:3000) 
@@ -19,6 +21,8 @@ app.use("/api/location",LocationRouter);
 app.use("/api/event_categories",Event_CategoriesRouter); 
 
 app.use("/api/user",UserRouter); 
+
+app.use("/api/event_locations",Event_LocationsRouter); 
 
 
 app.listen(port,()=>

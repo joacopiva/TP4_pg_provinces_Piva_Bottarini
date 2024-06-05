@@ -39,7 +39,7 @@ export default class UserService
 
         let token = jwt.sign(payload, key, options);
 
-        //let token2 = jwt.verify(token, key, options) EJEMPLO DE DESENCRIPTACION
+
         
         return {token};
     }

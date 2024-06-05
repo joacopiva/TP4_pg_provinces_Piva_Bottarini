@@ -45,7 +45,7 @@ router.post('/login', async(req, res)=>
         const GetAll = await svc.LogIn(req.body.username, req.body.password)
         let token = GetAll.token;
         
-        res.status(200).json({success: true, message: token})
+        res.status(200).send({token})
 
         
     }

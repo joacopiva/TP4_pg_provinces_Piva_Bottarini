@@ -11,14 +11,16 @@ export default class Autentication
 {
     desencriptacion = async (req, res, next) =>
     {
-        console.log(req.query.keytoken)
+        console.log(req.headers)
         let respuesta;
-        const substring = (req.query.keytoken)
+        const substring = req.headers.token
+        console.log(substring)
         let payload = null;
         try 
         {
-            payload = await jwt.verify(substring, key, options)
+            payload = jwt.verify(substring, key, options)
             console.log(payload)
+            respuesta = res.status(200);
         }
         catch(e)
         {

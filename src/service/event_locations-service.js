@@ -9,4 +9,28 @@ export default class Event_LocationsService
         return returnArray;
     }
 
+    getByIdAsync = async (id) => 
+    {
+        const repo = new Event_LocationsRepository();
+        const returnArray = await repo.getByIdAsync(id);
+        return returnArray;
+
+    }
+
+    getIdLocationAsync = async (id_location) => 
+    {
+        const repo = new Event_LocationsRepository();
+        const returnArray = await repo.getIdLocationAsync(id_location);
+        return returnArray;
+
+    }
+
+    createAsync = async (entity) => 
+    {
+        const repo = new Event_LocationsRepository();
+        const returnArray = await repo.createAsync(entity);
+        return returnArray;
+    }
+
 }
+

@@ -81,4 +81,42 @@ export default class Event_LocationsRepository
             return result
         
     }
+
+    updateAsync = async (entity) => 
+    {
+        const client = new Client(DBConfig);
+        await client.connect();
+        const sql = 
+        `UPDATE event_locations 
+        SET id_location = $1, name = $2, full_address = $3, max_capacity = $4, latitude = $5, longitude = $6, id_creator_user = $7
+        WHERE id = ${entity.id}`;
+
+
+        const values = 
+        [
+            entity.id_location,
+            entity.name,
+            entity.full_address,
+            entity.max_capacity,
+            entity.latitude,
+            entity.longitude,
+            entity.id_creator_user
+        ]
+        
+        const result = await client.query(sql, values);
+        await client.end();
+        return result;
+    }
+
+    deleteByIdAsync = async (id) => 
+    {
+        const client = new Client(DBConfig);
+        await client.connect();
+        const sql = 
+        `DELETE FROM event_locations WHERE id = ${id}`;
+        const result = await client.query(sql);
+        await client.end();
+        return result;
+    }
+
 }

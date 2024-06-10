@@ -32,5 +32,19 @@ export default class Event_LocationsService
         return returnArray;
     }
 
+    updateAsync = async (entity) => 
+    {
+        const repo = new Event_LocationsRepository();
+        const returnArray = await repo.updateAsync(entity);
+        return returnArray;
+    }
+
+    deleteByIdAsync = async (id) => 
+    {
+        const repo = new Event_LocationsRepository();
+        const returnArray = await repo.deleteByIdAsync(id);
+        return returnArray;
+    }
+
 }
 

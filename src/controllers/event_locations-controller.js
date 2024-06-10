@@ -61,8 +61,7 @@ router.post('', /*mw.desencriptacion,*/ async (req, res) =>
 
     const GetAll = await svc.getIdLocationAsync(entity.id_location)
    
-
-    if(entity != null | (campos.every(campo => help.validarVaciosYMenorTresLetras(campo))) == true || GetAll.id != null)
+    if(entity != null && (campos.every(campo => help.validarVaciosYMenorTresLetras(campo))) == true && GetAll != "" && entity.max_capacity > 0)
     {
         const returnArray = await svc.createAsync(entity);
         respuesta = res.status(201).json(returnArray);
@@ -76,16 +75,19 @@ router.post('', /*mw.desencriptacion,*/ async (req, res) =>
     return respuesta
 })
 
-router.put('', async (req, res) => 
+router.put('', /*mw.desencriptacion,*/ async (req, res) => 
 {
 
     let respuesta;
     let entity = req.body;
+    const GetAll = await svc.getIdLocationAsync(entity.id_location)
+    const {name, full_address} = req.body;
+    const campos = [name, full_address];
 
 
-    if(entity != null && (entity.name).length > 3 && (entity.name).length != 0)
+    if(entity != null && (campos.every(campo => help.validarVaciosYMenorTresLetras(campo))) == true && GetAll != "" && entity.max_capacity > 0)
     {
-        const returnArray = await svc.updateAsync(entity);
+
         const getAll = await svc.getAllAsync();
         let encontrado = false;
 
@@ -100,6 +102,7 @@ router.put('', async (req, res) =>
         
         if(encontrado)
         {
+            const returnArray = await svc.updateAsync(entity);
             respuesta = res.status(201).json(returnArray);
         }
         else
@@ -115,5 +118,39 @@ router.put('', async (req, res) =>
 
     return respuesta
 })
+
+
+router.delete('/:id', /*mw.desencriptacion,*/ async (req, res) => 
+{
+    let id = req.params.id;
+    let respuesta;
+
+    const getAll = await svc.getAllAsync();
+
+    let encontrado = false;
+
+        getAll.forEach(element => {
+            if(element.id == id)
+            {
+                encontrado = true;
+            }
+        });
+
+        
+        if(encontrado)
+        {
+            const returnArray = await svc.deleteByIdAsync(id);
+            respuesta = res.status(200).json(returnArray);
+        }
+        else
+        {
+            respuesta = res.status(404).send(`not found`)
+        }
+    
+
+    return respuesta;
+
+})
+
 
 export default router;

@@ -5,6 +5,7 @@ import LocationRouter from "./src/controllers/location-controller.js";
 import Event_CategoriesRouter from "./src/controllers/event_categories-controller.js";
 import UserRouter from "./src/controllers/user-controller.js";
 import Event_LocationsRouter from "./src/controllers/event_locations-controller.js";
+import EventRouter from "./src/controllers/event-controller.js";
 
 
 const app = express(); 
@@ -24,6 +25,8 @@ app.use("/api/user",UserRouter);
 
 app.use("/api/event_locations",Event_LocationsRouter); 
 
+app.use("/api/event",EventRouter); 
+
 
 app.listen(port,()=>
 {
@@ -31,8 +34,8 @@ app.listen(port,()=>
 })
 
 /*
-    1
-    2
+    1 HECHO
+    2 HECHO
     3
     4
     5

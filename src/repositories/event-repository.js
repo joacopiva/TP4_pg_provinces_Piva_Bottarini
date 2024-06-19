@@ -77,7 +77,19 @@ export default class EventRepository
 
             if(query.startdate)
             {
-                sql += (queryParams.length )
+                sql += (queryParams.length > 0 ? ' AND' : ' WHERE') + ' start_date = $' + (queryParams.length + 1);
+                queryParams.push(query.startdate);
+            }
+
+            if(query.name)
+            {
+                sql += (queryParams.length > 0 ? ' AND' : ' WHERE') + 'lower(events.name) = lower($' + (queryParams.length + 1) + ')';
+                queryParams.push(query.category);
+            }
+
+            if(query.category)
+            {
+                sql += (queryParams.length > 0 ? ' AND' : ' WHERE') + 'lower(event_categories.name) = lower($' + (queryParams.length + 1) + ')';
             }
              
         }

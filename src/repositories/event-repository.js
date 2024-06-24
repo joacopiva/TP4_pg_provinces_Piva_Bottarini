@@ -144,11 +144,13 @@ export default class Event_Repository
         try {
             await client.connect();
             const sql = `
-                SELECT events.*, 
-                    event_categories.name AS category_name, 
-                    event_locations.*, 
+                SELECT 
+                    event_categories.*, 
+                    provinces.*,
                     locations.*, 
-                    provinces.*
+                    event_locations.*, 
+                    events.*
+
                 FROM events 
                 LEFT JOIN event_categories ON events.id_event_category = event_categories.id
                 LEFT JOIN event_locations ON events.id_event_location = event_locations.id

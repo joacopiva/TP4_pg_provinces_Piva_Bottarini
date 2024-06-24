@@ -6,21 +6,6 @@ const router = Router();
 const svc = new EventService();
 const mw = new Autentication();
 
-router.get('', async (req,res) =>
-{
-
-    try
-    {
-        const events = await svc.getEvents();
-        if (events != null) {
-            return res.status(200).json(events);
-        } else {
-            return res.status(500).send('Error interno.');
-        }
-    }catch{
-        return res.status(500).send('Error interno.');
-    }
-});
 
 router.post('', /*mw.desencriptacion,*/ async (req,res) =>
 {
@@ -55,8 +40,8 @@ router.put('',async (req,res) =>{
 })
 
 
-router.get('/params/', async (req, res) => {
-
+router.get('/', async (req, res) => 
+{
 
     try {
         const query = req.query;
@@ -77,8 +62,7 @@ router.get('/params/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const id = req.id;
-
+        const id = req.params.id;
         const event = await svc.getEventDetail(id);
 
         if (event != null) {

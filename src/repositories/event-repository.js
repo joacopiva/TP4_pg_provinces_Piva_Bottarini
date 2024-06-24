@@ -144,30 +144,37 @@ export default class Event_Repository
         try {
             await client.connect();
             const sql = `
-            SELECT events.*, 
-                   event_categories.name AS category_name, 
-                   event_location.*, 
-                   locations.*, 
-                   provinces.*
-            FROM events
-            LEFT JOIN event_categories ON events.id_event_category = event_categories.id
-            LEFT JOIN event_locations ON events.id_event_location = event_locations.id
-            LEFT JOIN locations ON event_locations.id_location = locations.id
-            LEFT JOIN provinces ON locations.id_province = provinces.id
-            WHERE events.id = $1`;
-            
+                SELECT events.*, 
+                    event_categories.name AS category_name, 
+                    event_locations.*, 
+                    locations.*, 
+                    provinces.*
+                FROM events 
+                LEFT JOIN event_categories ON events.id_event_category = event_categories.id
+                LEFT JOIN event_locations ON events.id_event_location = event_locations.id
+                LEFT JOIN locations ON event_locations.id_location = locations.id
+                LEFT JOIN provinces ON locations.id_province = provinces.id
+                WHERE events.id = $1;`;
+    
             const result = await client.query(sql, [id]);
+
+
             if (result.rowCount > 0) {
-                const success = true;
-                // Procesa los resultados si es necesario
+                return result.rows; 
             } else {
                 console.log('No se encontró el evento con el ID proporcionado');
+                return null;
             }
     
-            await client.end();
-            return result.rows; // Retorna los resultados
         } catch (error) {
             console.log(error);
+            return null; 
+        } finally {
+            await client.end();
         }
     };
+    
 } 
+
+
+

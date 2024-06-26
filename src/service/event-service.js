@@ -56,4 +56,10 @@ export default class EventService
         const Events = await repo.getEventDetail(id);
         return Events;
     }
+
+    BuscarParticipantes = async (first_name, last_name, username, attendent, rating) => {
+        const repo = new Event_Repository()
+        const resultados = await repo.BuscarParticipantes(first_name,last_name,username,attendent,rating)
+        return resultados
+    }
 }

@@ -76,6 +76,15 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.get('/:id/enrollment', async (req, res) => 
+{
+    const returnArray = await svc.BuscarParticipantes(req.params.id, req.query.first_name, req.query.last_name, req.query.username, req.query.attended, req.query.rating)
+    if (returnArray != null) {
+        res.status(200).json(returnArray);
+    } else {
+        res.status(500).send(`Error Interno`);
+    }
+})
 
 
 export default router

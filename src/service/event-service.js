@@ -93,4 +93,17 @@ export default class EventService
         const returnArray = await repo.GetEventId(id);
         return returnArray;
     }
+
+    getAllAsync = async () => {
+        const repo = new Event_Repository();
+        const returnArray = await repo.getAllAsync();
+        return returnArray;
+    }
+
+    deleteByIdAsync = async (id) => 
+    {
+        const repo = new Event_Repository();
+        const returnArray = await repo.deleteByIdAsync(id);
+        return returnArray;
+    }
 }

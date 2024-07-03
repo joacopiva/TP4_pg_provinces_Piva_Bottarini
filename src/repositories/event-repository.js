@@ -276,6 +276,31 @@ WHERE
         return returnArray;
     }
 
+    getAllAsync = async () => {
+        let returnArray = null;
+        const client = new Client(DBConfig);
+        try{
+            await client.connect();
+            const sql = `SELECT * FROM events`;
+            const result = await client.query(sql);
+            await client.end();
+            returnArray = result.rows;
+        } catch (error) {
+            console.log(error);
+        }
+        return returnArray;
+    }
+
+    deleteByIdAsync = async (id) => 
+    {
+        const client = new Client(DBConfig);
+        await client.connect();
+        const sql = 
+        `DELETE FROM events WHERE id = ${id}`;
+        const result = await client.query(sql);
+        await client.end();
+        return result;
+    }
     
 } 
 

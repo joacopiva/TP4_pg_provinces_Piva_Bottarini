@@ -81,7 +81,7 @@ router.post('', /*mw.desencriptacion,*/ async (req, res) =>
     return respuesta
 })
 
-router.put('', async (req, res) => 
+router.put('', /*mw.desencriptacion,*/ async (req, res) => 
 {
 
     let respuesta;
@@ -124,6 +124,39 @@ router.put('', async (req, res) =>
     }
 
     return respuesta
+})
+
+router.delete('/:id', /*mw.desencriptacion,*/ async (req, res) => 
+{
+    let id = req.params.id;
+    let respuesta;
+
+    const getAll = await svc.getAllAsync();
+
+
+    let encontrado = false;
+
+        getAll.forEach(element => {
+            if(element.id == id)
+            {
+                encontrado = true;
+            }
+        });
+
+        
+        if(encontrado)
+        {
+            const returnArray = await svc.deleteByIdAsync(id);
+            respuesta = res.status(200).json(returnArray);
+        }
+        else
+        {
+            respuesta = res.status(404).send(`not found`)
+        }
+    
+
+    return respuesta;
+
 })
 
 

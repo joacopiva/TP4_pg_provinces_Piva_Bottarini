@@ -39,6 +39,5 @@ router.get('/:id', async (req, res) =>
     return respuesta;
 });
 
-// falta un get
 
 export default router;

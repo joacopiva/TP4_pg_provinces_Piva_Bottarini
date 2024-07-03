@@ -197,15 +197,16 @@ WHERE
         }
     };
 
-    BuscarParticipantes = async (first_name, last_name, username, attendent, rating) => {
+    BuscarParticipantes = async (id, first_name, last_name, username, attendent, rating) => {
         let returnArray = null;
         const client = new Client(DBConfig);
         try {
             await client.connect();
+
             let sql = `SELECT * FROM users 
             LEFT JOIN event_enrollments on users.id = event_enrollments.id_user
             LEFT JOIN events on event_enrollments.id_event = events.id
-            WHERE 1=1`;
+            WHERE 1=1`; 
             
             if (first_name !== null && first_name !== undefined) {
                 sql += ` AND users.first_name LIKE '%${first_name}%'`;
@@ -217,7 +218,7 @@ WHERE
                 sql += ` AND users.username = '${username}'`;
             }
             if (attendent !== null && attendent !== undefined) {
-                sql += ` AND event_enrollments.attendent = '${attendent}'`;
+                sql += ` AND event_enrollments.attended = '${attendent}'`;
             }
             if (rating !== null && rating !== undefined) {
                 sql += ` AND event_enrollments.rating = '${rating}'`;
@@ -225,7 +226,6 @@ WHERE
             const result = await client.query(sql);
             await client.end();
             returnArray = result.rows;
-            console.log(returnArray)
         } catch (error) {
             console.log(error);
         }

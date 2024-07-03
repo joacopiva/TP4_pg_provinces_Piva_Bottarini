@@ -57,9 +57,9 @@ export default class EventService
         return Events;
     }
 
-    BuscarParticipantes = async (first_name, last_name, username, attendent, rating) => {
+    BuscarParticipantes = async (id, first_name, last_name, username, attendent, rating) => {
         const repo = new Event_Repository()
-        const resultados = await repo.BuscarParticipantes(first_name,last_name,username,attendent,rating)
+        const resultados = await repo.BuscarParticipantes(id, first_name,last_name,username,attendent,rating)
         return resultados
     }
 }

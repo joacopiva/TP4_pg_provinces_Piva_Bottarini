@@ -35,5 +35,19 @@ export default class LocationRepository
         return returnArray;
     }
 
-    // falta un get
+    getLocationByProvince = async (id) =>
+    {
+        let returnArray = null;
+        const client = new Client(DBConfig);
+        try{
+            await client.connect();
+            const sql = `SELECT * FROM locations WHERE id_province = ${id}`;
+            const result = await client.query(sql);
+            await client.end();
+            returnArray = result.rows;
+        } catch (error) {
+            console.log(error);
+        }
+        return returnArray;
+    }
 }

@@ -38,6 +38,28 @@ router.get('/:id', async (req, res) =>
     return respuesta;
 });
 
+router.get('/:id/locations', async (req, res) => 
+{
+    let id = req.params.id;
+    console.log(id)
+    
+    let respuesta;
+    const returnArray = await svc.getLocationByProvince(id);
+
+    if(returnArray != null)
+    {
+        respuesta = res.status(201).json(returnArray);
+    }
+    else
+    {
+        respuesta = res.status(500).send(`Error interno.`)
+    }
+
+
+
+    return respuesta;
+});
+
 router.post('', async (req, res) => 
 {
     let respuesta

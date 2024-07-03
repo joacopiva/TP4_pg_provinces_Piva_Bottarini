@@ -62,4 +62,35 @@ export default class EventService
         const resultados = await repo.BuscarParticipantes(id, first_name,last_name,username,attendent,rating)
         return resultados
     }
+
+//CRUD
+
+    createAsync = async (entity) => 
+    {
+        const repo = new Event_Repository();
+        const returnArray = await repo.createAsync(entity);
+        return returnArray;
+    }
+
+    GetLocationByEventId = async (id_event_location) => 
+    {
+        const repo = new Event_Repository();
+        const returnArray = await repo.GetLocationByEventId(id_event_location);
+        return returnArray;
+
+    }
+
+    updateAsync = async (entity) => 
+    {
+        const repo = new Event_Repository();
+        const returnArray = await repo.updateAsync(entity);
+        return returnArray;
+    }
+
+    GetEventId = async (id) =>
+    {
+        const repo = new Event_Repository();
+        const returnArray = await repo.GetEventId(id);
+        return returnArray;
+    }
 }

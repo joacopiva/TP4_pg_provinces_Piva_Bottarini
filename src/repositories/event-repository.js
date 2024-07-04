@@ -301,6 +301,36 @@ WHERE
         await client.end();
         return result;
     }
+
+    createUserEnrollment = async (usuario, idEvento) =>
+    {
+        
+        const client = new Client(DBConfig);
+        await client.connect();
+        const sql = 
+            `
+                INSERT INTO event_enrollments
+                    (id_event, id_user, description, registration_date_time, attended, observations, rating)
+                VALUES
+                    ($1, $2, $3, $4, $5, $6, $7)
+            `;
+            const values =    
+            [
+                idEvento,
+                usuario.id,
+                usuario.username,
+                new Date(),
+                1,
+                "hola",
+                1
+            ]
+
+            console.log(values)
+            const result = await client.query(sql, values);
+
+            await client.end();
+            return result
+    }
     
 } 
 

@@ -106,4 +106,12 @@ export default class EventService
         const returnArray = await repo.deleteByIdAsync(id);
         return returnArray;
     }
+
+    createUserEnrollment = async (usuario, idEvento) =>
+    {
+        const repo = new Event_Repository();
+        const returnArray = await repo.createUserEnrollment(usuario, idEvento);
+        return returnArray;
+    }
+    
 }

@@ -160,4 +160,48 @@ router.delete('/:id', /*mw.desencriptacion,*/ async (req, res) =>
 })
 
 
+//Inscripcion a un evento
+
+
+router.post('/:id/enrollment', mw.desencriptacion, async (req, res) => 
+{
+    let respuesta;
+    let idEvento = req.params.id;
+    let usuario = req.user;
+
+    const returnArray = await svc.createUserEnrollment(usuario, idEvento);  
+
+    if (returnArray != null) {
+        res.status(200).json(returnArray);
+    } else {
+        res.status(500).send(`Error Interno`);
+    }
+    
+    return respuesta;
+})
+
+router.delete('/:id', mw.desencriptacion, async (req, res) => 
+{
+    let respuesta;
+    let idEvento = req.params.id;
+    let usuario = req.user;
+
+        
+        if(encontrado)
+        {
+            const returnArray = await svc.deleteByIdAsync(usuario.id);
+            respuesta = res.status(200).json(returnArray);
+        }
+        else
+        {
+            respuesta = res.status(404).send(`not found`)
+        }
+    
+
+    return respuesta;
+
+})
+
+// falta terminar el post y delete
+
 export default router

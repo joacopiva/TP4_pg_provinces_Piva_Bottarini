@@ -168,34 +168,75 @@ router.post('/:id/enrollment', mw.desencriptacion, async (req, res) =>
     let respuesta;
     let idEvento = req.params.id;
     let usuario = req.user;
+    let encontrado = false;
+    const DetalleEvento = await svc.GetEventId(idEvento);
+    const DetalleLocation = await svc.GetLocationByEventId(idEvento);
+    const fechaActual = new Date();
+    const diferenciaEnMs = new Date(DetalleEvento[0].start_date).getTime() - fechaActual.getTime();
+    var diferenciaEnAnios = diferenciaEnMs / (1000 * 3600 * 24 * 365.25);
 
-    const returnArray = await svc.createUserEnrollment(usuario, idEvento);  
+    const getEnrollment = await svc.getAllEnrollmentByIdAsync(usuario.id)
 
-    if (returnArray != null) {
-        res.status(200).json(returnArray);
-    } else {
-        res.status(500).send(`Error Interno`);
+    for (let i = 0; i < getEnrollment.length; i++) 
+    {
+        if (getEnrollment[i].id_event == idEvento) 
+        {
+            encontrado = true;
+        }
     }
+
+    if(DetalleEvento[0].max_assistance > DetalleLocation[0].max_capacity || diferenciaEnAnios <= 0 || DetalleEvento[0].enabled_for_enrollment == 0 || encontrado == true)
+    {
+        res.status(400).send(`bad request`);
+    }
+    else
+    {
+        const returnArray = await svc.createUserEnrollment(usuario, idEvento);  
+
+        if (returnArray != null) 
+        {
+            res.status(200).json(returnArray);
+        } else 
+        {
+            res.status(404).send(`not found`);
+        }
+    }
+
     
     return respuesta;
 })
 
-router.delete('/:id', mw.desencriptacion, async (req, res) => 
+router.delete('/:id/enrollment', mw.desencriptacion, async (req, res) => 
 {
     let respuesta;
-    let idEvento = req.params.id;
     let usuario = req.user;
+    let idEvento = req.params.id;
+    const getEnrollment = await svc.getAllEnrollmentByIdAsync(usuario.id)
+
+
+    const DetalleEvento = await svc.GetEventId(idEvento);
+    const fechaActual = new Date();
+    const diferenciaEnMs = new Date(DetalleEvento[0].start_date).getTime() - fechaActual.getTime();
+    var diferenciaEnAnios = diferenciaEnMs / (1000 * 3600 * 24 * 365.25);
 
         
-        if(encontrado)
+    if(getEnrollment != "" && diferenciaEnAnios >= 0)
+    {
+        const returnArray = await svc.deleteUserEnrollmentByIdAsync(usuario.id, idEvento);
+        if(returnArray != null)
         {
-            const returnArray = await svc.deleteByIdAsync(usuario.id);
             respuesta = res.status(200).json(returnArray);
         }
         else
         {
-            respuesta = res.status(404).send(`not found`)
+            respuesta = res.status(404).json(`not found`);
         }
+
+    }
+    else
+    {
+        respuesta = res.status(400).send(`not found`)
+    }
     
 
     return respuesta;

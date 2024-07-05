@@ -320,18 +320,57 @@ WHERE
                 usuario.id,
                 usuario.username,
                 new Date(),
-                1,
-                "hola",
-                1
+                0,
+                null,
+                null
             ]
 
-            console.log(values)
             const result = await client.query(sql, values);
 
             await client.end();
             return result
     }
+
+    deleteUserEnrollmentByIdAsync = async (idUser, idEvent) => 
+    {
+        const client = new Client(DBConfig);
+        await client.connect();
+        const sql = 
+        `DELETE FROM event_enrollments WHERE id_user = ${idUser} AND id_event = ${idEvent}`;
+        const result = await client.query(sql);
+        await client.end();
+        return result;
+    }
+
+    getAllEnrollmentAsync = async () => {
+        let returnArray = null;
+        const client = new Client(DBConfig);
+        try{
+            await client.connect();
+            const sql = `SELECT * FROM event_enrollments`;
+            const result = await client.query(sql);
+            await client.end();
+            returnArray = result.rows;
+        } catch (error) {
+            console.log(error);
+        }
+        return returnArray;
+    }
     
+    getAllEnrollmentByIdAsync = async (id) => {
+        let returnArray = null;
+        const client = new Client(DBConfig);
+        try{
+            await client.connect();
+            const sql = `SELECT * FROM event_enrollments WHERE id_user = ${id}`;
+            const result = await client.query(sql);
+            await client.end();
+            returnArray = result.rows;
+        } catch (error) {
+            console.log(error);
+        }
+        return returnArray;
+    }
 } 
 
 

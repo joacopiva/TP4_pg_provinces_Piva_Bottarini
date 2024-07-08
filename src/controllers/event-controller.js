@@ -209,18 +209,25 @@ router.post('/:id/enrollment', mw.desencriptacion, async (req, res) =>
 router.delete('/:id/enrollment', mw.desencriptacion, async (req, res) => 
 {
     let respuesta;
+    let encontrado = false;
     let usuario = req.user;
     let idEvento = req.params.id;
     const getEnrollment = await svc.getAllEnrollmentByIdAsync(usuario.id)
-
-
     const DetalleEvento = await svc.GetEventId(idEvento);
     const fechaActual = new Date();
     const diferenciaEnMs = new Date(DetalleEvento[0].start_date).getTime() - fechaActual.getTime();
     var diferenciaEnAnios = diferenciaEnMs / (1000 * 3600 * 24 * 365.25);
 
+    for (let i = 0; i < getEnrollment.length; i++) 
+    {
+        if (getEnrollment[i].id_event == idEvento) 
+        {
+            encontrado = true;
+        }
+    }
+
         
-    if(getEnrollment != "" && diferenciaEnAnios >= 0)
+    if(encontrado == true && diferenciaEnAnios >= 0)
     {
         const returnArray = await svc.deleteUserEnrollmentByIdAsync(usuario.id, idEvento);
         if(returnArray != null)
@@ -243,30 +250,50 @@ router.delete('/:id/enrollment', mw.desencriptacion, async (req, res) =>
 
 })
 
-router.patch(':id/enrollment:rating', mw.desencriptacion, async (req,res)=>
+router.patch('/:id/enrollment/:rating', mw.desencriptacion, async (req,res)=>
 {
     let respuesta;
-    const rating = req.query.rating;
+    let encontrado = false;
+    const rating = req.params.rating;
     const idUser = req.user.id;
     const idEvent = req.params.id;
-
+    const getEnrollment = await svc.getAllEnrollmentByIdAsync(idUser)
+    const DetalleEvento = await svc.GetEventId(idEvent);
     const fechaActual = new Date();
     const diferenciaEnMs = new Date(DetalleEvento[0].start_date).getTime() - fechaActual.getTime();
     var diferenciaEnAnios = diferenciaEnMs / (1000 * 3600 * 24 * 365.25);
 
-    if(help.ValidarRating(rating) == false || diferenciaEnAnios <= 0)
+    for (let i = 0; i < getEnrollment.length; i++) 
     {
-        return respuesta = res.status(400).send("el valor no es encuentra entre 1 y 10")
+        if (getEnrollment[i].id_event == idEvent) 
+        {
+            encontrado = true;
+        }
+    }
+
+    if(help.ValidarRating(rating) == false || diferenciaEnAnios <= 0 || encontrado == false)
+    {
+        return respuesta = res.status(400).send(`bad request`);
     }
     else
     {
-        const returnArray = await svc.updateEnrollmentAsync(idUser, idEvent, rating, req.body.observations);
+        const returnArray = await svc.updateEnrollmentAsync(idEvent, idUser, rating, req.body.observations);
+
+        if(returnArray == "")
+        {
+            return respuesta = res.status(404).send(`not found`);
+        }
+        else
+        {
+            return respuesta = res.status(200).send(`un exito`);
+        }
     }
+
+
+
+
 
     
 })
-
-//Falta terminar el Patch y cambiar el if del delete(encontrar el usuario y el evento)
-
 
 export default router

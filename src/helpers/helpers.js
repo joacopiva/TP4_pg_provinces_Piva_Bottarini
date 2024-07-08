@@ -65,9 +65,10 @@ class helpers
 
     ValidarRating(rating)
     {
-        let validado = false;
+        let validado = false;      
         if(rating >= 0 && rating <= 10)
         {
+
             return validado = true;
         }
     }

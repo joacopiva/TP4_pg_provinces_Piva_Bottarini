@@ -377,10 +377,12 @@ WHERE
         const client = new Client(DBConfig);
         try{
             await client.connect();
-            const sql = `UPDATE event_enrollments SET rating = ${rating}, observations = '${observation}' WHERE id_event = ${idEvent} AND id_user = ${idUser}  `
+            console.log(idUser, idEvent, rating, observation)
+            const sql = `UPDATE event_enrollments SET rating = ${rating}, observations = '${observation}' WHERE id_event = ${idEvent} AND id_user = ${idUser}`
             const result = await client.query(sql);
             await client.end();
-            returnArray = result.rows;
+            returnArray = result.rowCount;
+            console.log(returnArray)
             } catch (error) {
                 console.log(error);
             }

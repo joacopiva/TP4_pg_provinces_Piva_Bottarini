@@ -121,15 +121,24 @@ export default class EventService
         return returnArray;
     }
 
-    getAllEnrollmentAsync = async () => {
+    getAllEnrollmentAsync = async () => 
+    {
         const repo = new Event_Repository();
         const returnArray = await repo.getAllEnrollmentAsync();
         return returnArray;
     }
 
-    getAllEnrollmentByIdAsync = async (id) => {
+    getAllEnrollmentByIdAsync = async (id) => 
+    {
         const repo = new Event_Repository();
         const returnArray = await repo.getAllEnrollmentByIdAsync(id);
+        return returnArray;
+    }
+
+    updateEnrollmentAsync = async (idUser, idEvent, rating, observations) =>
+    {
+        const repo = new Event_Repository();
+        const returnArray = await repo.updateEnrollmentAsync(idUser, idEvent, rating, observations);
         return returnArray;
     }
     

@@ -29,7 +29,7 @@ router.get('/', mw.desencriptacion, async (req, res) => {
 });
 
 
-router.get('/:id', /*mw.desencriptacion,*/ async (req, res) => 
+router.get('/:id', mw.desencriptacion, async (req, res) => 
 {
     let id = req.params.id;
     
@@ -52,7 +52,7 @@ router.get('/:id', /*mw.desencriptacion,*/ async (req, res) =>
     return respuesta;
 });
 
-router.post('', /*mw.desencriptacion,*/ async (req, res) => 
+router.post('', mw.desencriptacion, async (req, res) => 
 {
     let respuesta
     let entity = req.body;
@@ -75,7 +75,7 @@ router.post('', /*mw.desencriptacion,*/ async (req, res) =>
     return respuesta
 })
 
-router.put('', /*mw.desencriptacion,*/ async (req, res) => 
+router.put('', mw.desencriptacion, async (req, res) => 
 {
 
     let respuesta;
@@ -120,7 +120,7 @@ router.put('', /*mw.desencriptacion,*/ async (req, res) =>
 })
 
 
-router.delete('/:id', /*mw.desencriptacion,*/ async (req, res) => 
+router.delete('/:id', mw.desencriptacion, async (req, res) => 
 {
     let id = req.params.id;
     let respuesta;

@@ -58,7 +58,7 @@ router.get('/:id/enrollment', async (req, res) =>
 // CRUD
 
 
-router.post('', /*mw.desencriptacion,*/ async (req, res) => 
+router.post('', mw.desencriptacion, async (req, res) => 
 {
     let respuesta
     let entity = req.body;
@@ -81,7 +81,7 @@ router.post('', /*mw.desencriptacion,*/ async (req, res) =>
     return respuesta
 })
 
-router.put('', /*mw.desencriptacion,*/ async (req, res) => 
+router.put('', mw.desencriptacion, async (req, res) => 
 {
 
     let respuesta;
@@ -126,7 +126,7 @@ router.put('', /*mw.desencriptacion,*/ async (req, res) =>
     return respuesta
 })
 
-router.delete('/:id', /*mw.desencriptacion,*/ async (req, res) => 
+router.delete('/:id', mw.desencriptacion, async (req, res) => 
 {
     let id = req.params.id;
     let respuesta;
@@ -243,6 +243,30 @@ router.delete('/:id/enrollment', mw.desencriptacion, async (req, res) =>
 
 })
 
-// falta terminar el post y delete
+router.patch(':id/enrollment:rating', mw.desencriptacion, async (req,res)=>
+{
+    let respuesta;
+    const rating = req.query.rating;
+    const idUser = req.user.id;
+    const idEvent = req.params.id;
+
+    const fechaActual = new Date();
+    const diferenciaEnMs = new Date(DetalleEvento[0].start_date).getTime() - fechaActual.getTime();
+    var diferenciaEnAnios = diferenciaEnMs / (1000 * 3600 * 24 * 365.25);
+
+    if(help.ValidarRating(rating) == false || diferenciaEnAnios <= 0)
+    {
+        return respuesta = res.status(400).send("el valor no es encuentra entre 1 y 10")
+    }
+    else
+    {
+        const returnArray = await svc.updateEnrollmentAsync(idUser, idEvent, rating, req.body.observations);
+    }
+
+    
+})
+
+//Falta terminar el Patch y cambiar el if del delete(encontrar el usuario y el evento)
+
 
 export default router

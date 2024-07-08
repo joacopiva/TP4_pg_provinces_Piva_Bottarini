@@ -62,6 +62,15 @@ class helpers
         }
         return "Ok";
     }
+
+    ValidarRating(rating)
+    {
+        let validado = false;
+        if(rating >= 0 && rating <= 10)
+        {
+            return validado = true;
+        }
+    }
 }
 
 export default helpers 

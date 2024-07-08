@@ -371,6 +371,23 @@ WHERE
         }
         return returnArray;
     }
+
+    updateEnrollmentAsync= async (idEvent, idUser, rating, observation) => {
+        let returnArray = null;
+        const client = new Client(DBConfig);
+        try{
+            await client.connect();
+            const sql = `UPDATE event_enrollments SET rating = ${rating}, observations = '${observation}' WHERE id_event = ${idEvent} AND id_user = ${idUser}  `
+            const result = await client.query(sql);
+            await client.end();
+            returnArray = result.rows;
+            } catch (error) {
+                console.log(error);
+            }
+
+
+        return returnArray;
+    }
 } 
 
 

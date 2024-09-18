@@ -34,14 +34,13 @@ router.post('/register', async (req, res) =>
 
 router.post('/login', async(req, res)=>
 {
-    let respuesta
 
-
+  
     const returnArray = await svc.getByUsernamePassword(req.body.username, req.body.password);
 
-
-    if(returnArray.username == req.username)
+    if(returnArray.username == req.username && returnArray != "")
     {
+
         const GetAll = await svc.LogIn(req.body.username, req.body.password)
         let token = GetAll.token;
         

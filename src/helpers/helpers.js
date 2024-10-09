@@ -17,7 +17,6 @@ class helpers
         let regExp = /[\w._%+-]+@[\w.-]+\.[a-z]{2,4}/
         if(variable.match(regExp))
         {
-            console.log("validado")
             valido2 = true;
         }
         return valido2

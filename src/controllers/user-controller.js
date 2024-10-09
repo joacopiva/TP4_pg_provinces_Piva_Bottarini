@@ -12,6 +12,7 @@ router.post('/register', async (req, res) =>
     let respuesta
     let entity = req.body;
 
+
     const { first_name, last_name, password, username } = req.body;
     const campos = [first_name, last_name, password];
 

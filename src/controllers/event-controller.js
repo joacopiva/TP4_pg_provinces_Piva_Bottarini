@@ -164,6 +164,22 @@ router.delete('/:id', mw.desencriptacion, async (req, res) =>
 
 //Inscripcion a un evento
 
+router.get('/:id/enrollment/participants', async (req, res) =>
+{
+    const idEvento = req.params.id
+    let respuesta;
+    const returnArray = await svc.getAllEnrollmentByEventIdAsync(idEvento);
+    if(returnArray != null)
+    {  
+        respuesta = res.status(200).json(returnArray);
+    } 
+    else
+    {
+        respuesta = res.status(500).send(`Error interno.`)
+    }
+    return respuesta;
+})
+
 
 router.post('/:id/enrollment', mw.desencriptacion, async (req, res) => 
 {
@@ -171,10 +187,11 @@ router.post('/:id/enrollment', mw.desencriptacion, async (req, res) =>
     let idEvento = req.params.id;
     let usuario = req.user;
     let encontrado = false;
+    let cantidadParticipantes = 0;
     const DetalleEvento = await svc.GetEventId(idEvento);
     const DetalleLocation = await svc.GetLocationByEventId(DetalleEvento[0].id_event_location);
     const DetalleEnrollment = await svc.getAllEnrollmentByEventIdAsync(idEvento)
-    const cantidadParticipantes = Object.keys(DetalleEnrollment).length
+    cantidadParticipantes = (Object.keys(DetalleEnrollment).length) + 1
     const fechaActual = new Date();
     const diferenciaEnMs = new Date(DetalleEvento[0].start_date).getTime() - fechaActual.getTime();
     var diferenciaEnAnios = diferenciaEnMs / (1000 * 3600 * 24 * 365.25);
@@ -188,7 +205,6 @@ router.post('/:id/enrollment', mw.desencriptacion, async (req, res) =>
             encontrado = true;
         }
     }
-    //corregir que si hay mas particimantes de los que permite la asistencia maxima que no haga el endpoint
 
     if(DetalleEvento[0].max_assistance > DetalleLocation[0].max_capacity || diferenciaEnAnios <= 0 || DetalleEvento[0].enabled_for_enrollment == 0 || encontrado == true || DetalleEvento[0].max_assistance < cantidadParticipantes)
     {

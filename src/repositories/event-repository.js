@@ -356,6 +356,21 @@ WHERE
         }
         return returnArray;
     }
+
+    getAllEnrollmentByEventIdAsync = async (id) => {
+        let returnArray = null;
+        const client = new Client(DBConfig);
+        try{
+            await client.connect();
+            const sql = `SELECT * FROM event_enrollments WHERE id_event = ${id}`;
+            const result = await client.query(sql);
+            await client.end();
+            returnArray = result.rows;
+        } catch (error) {
+            console.log(error);
+        }
+        return returnArray;
+    }
     
     getAllEnrollmentByIdAsync = async (id) => {
         let returnArray = null;

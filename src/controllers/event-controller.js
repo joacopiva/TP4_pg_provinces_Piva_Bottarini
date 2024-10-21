@@ -115,7 +115,7 @@ router.put('', mw.desencriptacion, async (req, res) =>
         
         if(encontrado)
         {
-            respuesta = res.status(201).json(returnArray);
+            respuesta = res.status(200).json(returnArray);
         }
         else
         {
@@ -132,7 +132,7 @@ router.put('', mw.desencriptacion, async (req, res) =>
 })
 
 router.delete('/:id', mw.desencriptacion, async (req, res) => 
-{
+{   console.log("ENTRE")
     let id = req.params.id;
     let respuesta;
 
@@ -171,6 +171,7 @@ router.get('/:id/enrollment/participants', async (req, res) =>
 {
     const idEvento = req.params.id
     let respuesta;
+    console.log("ENTREEEEEEEEE", idEvento)
     const returnArray = await svc.getAllEnrollmentByEventIdAsync(idEvento);
     if(returnArray != null)
     {  

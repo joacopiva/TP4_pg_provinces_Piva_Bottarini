@@ -59,4 +59,28 @@ router.post('/login', async(req, res)=>
 })
 
 
+router.get('/:id', async (req, res) => 
+{
+
+    let idEvent = req.params.id;
+    let respuesta;
+    const returnArray = await svc.getByIdAsync(idEvent);
+
+    
+    if(returnArray != "")
+    {
+        respuesta = res.status(200).json(returnArray);
+
+    }
+    else
+    {
+        respuesta = res.status(404).send(`Id no encontrado`)
+    }
+
+    
+
+    return respuesta;
+});
+
+
 export default router; 

@@ -43,4 +43,12 @@ export default class UserService
         
         return {token};
     }
+
+    getByIdAsync = async (id) => 
+    {
+        const repo = new UserRepository();
+        const returnArray = await repo.getByIdAsync(id);
+        return returnArray;
+
+    }
 }

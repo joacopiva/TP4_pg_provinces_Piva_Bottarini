@@ -133,12 +133,10 @@ router.put('', mw.desencriptacion, async (req, res) =>
 
 router.delete('/:id', mw.desencriptacion, async (req, res) => 
 {  
-    console.log("entre aca")
     let id = req.params.id;
     let respuesta;
 
     const getAll = await svc.GetEventId(id);
-    console.log(getAll)
         
     if(getAll != "")
     {
@@ -160,9 +158,11 @@ router.delete('/:id', mw.desencriptacion, async (req, res) =>
 
 router.get('/:id/enrollment/participants', async (req, res) =>
 {
+
     const idEvento = req.params.id
     let respuesta;
     const returnArray = await svc.getAllEnrollmentByEventIdAsync(idEvento);
+
     if(returnArray != null)
     {  
         respuesta = res.status(200).json(returnArray);

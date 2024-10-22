@@ -4981,7 +4981,7 @@ ALTER TABLE ONLY public.users
 --
 
 ALTER TABLE ONLY public.event_enrollments
-    ADD CONSTRAINT fk_event_enrollments_events FOREIGN KEY (id_event) REFERENCES public.events(id);
+    ADD CONSTRAINT fk_event_enrollments_events FOREIGN KEY (id_event) REFERENCES public.events(id) ON DELETE CASCADE;
 
 
 --
@@ -5008,7 +5008,7 @@ ALTER TABLE ONLY public.event_locations
 --
 
 ALTER TABLE ONLY public.event_tags
-    ADD CONSTRAINT fk_event_tags_events FOREIGN KEY (id_event) REFERENCES public.events(id);
+    ADD CONSTRAINT fk_event_tags_events FOREIGN KEY (id_event) REFERENCES public.events(id) ON DELETE CASCADE;
 
 
 --

@@ -13,7 +13,7 @@ export default class Autentication
     {
         let respuesta;
         let substring = req.headers.authorization;
-        console.log('desencriptacion: ', substring);
+        // console.log('desencriptacion: ', substring);
         let payload = null;
         try 
         {

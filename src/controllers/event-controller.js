@@ -132,32 +132,23 @@ router.put('', mw.desencriptacion, async (req, res) =>
 })
 
 router.delete('/:id', mw.desencriptacion, async (req, res) => 
-{   console.log("ENTRE")
+{  
+    console.log("entre aca")
     let id = req.params.id;
     let respuesta;
 
-    const getAll = await svc.getAllAsync();
-
-
-    let encontrado = false;
-
-        getAll.forEach(element => {
-            if(element.id == id)
-            {
-                encontrado = true;
-            }
-        });
-
+    const getAll = await svc.GetEventId(id);
+    console.log(getAll)
         
-        if(encontrado)
-        {
-            const returnArray = await svc.deleteByIdAsync(id);
-            respuesta = res.status(200).json(returnArray);
-        }
-        else
-        {
-            respuesta = res.status(404).send(`not found`)
-        }
+    if(getAll != "")
+    {
+        const returnArray = await svc.deleteByIdAsync(id);
+        respuesta = res.status(200).json(returnArray);
+    }
+    else
+    {
+        respuesta = res.status(404).send(`not found`)
+    }
     
 
     return respuesta;
@@ -171,7 +162,6 @@ router.get('/:id/enrollment/participants', async (req, res) =>
 {
     const idEvento = req.params.id
     let respuesta;
-    console.log("ENTREEEEEEEEE", idEvento)
     const returnArray = await svc.getAllEnrollmentByEventIdAsync(idEvento);
     if(returnArray != null)
     {  

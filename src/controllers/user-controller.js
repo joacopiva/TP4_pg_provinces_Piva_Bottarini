@@ -61,7 +61,6 @@ router.post('/login', async(req, res)=>
 
 router.get('/:id', async (req, res) => 
 {
-
     let idEvent = req.params.id;
     let respuesta;
     const returnArray = await svc.getByIdAsync(idEvent);
@@ -75,6 +74,29 @@ router.get('/:id', async (req, res) =>
     else
     {
         respuesta = res.status(404).send(`Id no encontrado`)
+    }
+
+    
+
+    return respuesta;
+});
+
+router.get('/:username/user', async (req, res) => 
+{
+
+    let username = req.params.username;
+    let respuesta;
+    const returnArray = await svc.getByUsernameAsync(username);
+
+    
+    if(returnArray != "")
+    {
+        respuesta = res.status(200).json(returnArray);
+
+    }
+    else
+    {
+        respuesta = res.status(404).send(`user no encontrado`)
     }
 
     

@@ -66,6 +66,7 @@ router.post('', mw.desencriptacion, async (req, res) =>
     const campos = [name, description];
 
     const GetAll = await svc.GetLocationByEventId(req.body.id_event_location);
+    console.log(entity)
 
     if(entity != null && (campos.every(campo => help.validarVaciosYMenorTresLetras(campo))) == true && GetAll[0].max_capacity > entity.max_assistance)
     {

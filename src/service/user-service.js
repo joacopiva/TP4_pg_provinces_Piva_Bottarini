@@ -51,4 +51,12 @@ export default class UserService
         return returnArray;
 
     }
+
+    getByUsernameAsync = async (username) => 
+    {
+        const repo = new UserRepository();
+        const returnArray = await repo.getByUsernameAsync(username);
+        return returnArray;
+
+    }
 }
